@@ -2,8 +2,21 @@ require 'rest-client'
 require 'json'
 require 'date'
 
+def print_metrics(total, version, downloads)
+  current_time = DateTime.now
+  formatted_time = current_time.strftime '%m/%d/%Y - %H:%M'
+  
+  printf "\n"
+  printf "Metrics: \n"
+  printf "  Date/Time: #{formatted_time} \n"
+  printf "  Total Downloads: #{total} \n"
+  printf "  Most Downloaded Version: %s at %s downloads \n\n",
+         version, downloads
+  printf "=================================================\n"
+end
+
 if ARGV.empty?
-  printf "Please specify a cookbook name to see metrics. \n"
+  printf "Please specify a Chef Supermarket cookbook to see metrics. \n"
   exit
 end
 
@@ -33,13 +46,6 @@ sorted.each do |version|
   printf "%-08s %-03s\n", version[0], version[1]
 end
 
-current_time = DateTime.now
-formatted_time = current_time.strftime '%m/%d/%Y - %H:%M'
+print_metrics(total, highest_download[0], highest_download[1])
 
-printf "\n"
-printf "Metrics: \n"
-printf "  Date/Time: #{formatted_time} \n"
-printf "  Total Downloads: #{total} \n"
-printf "  Most Downloaded Version: %s at %s downloads \n\n",
-       highest_download[0], highest_download[1]
-printf "=================================================\n"
+
