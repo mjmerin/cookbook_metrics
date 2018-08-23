@@ -12,8 +12,11 @@ def print_metrics(total, version, downloads)
   printf "  Total Downloads: #{total} \n"
   printf "  Most Downloaded Version: %s at %s downloads \n\n",
          version, downloads
-  printf "=================================================\n"
+  printf "===========================================================\n"
 end
+
+
+
 
 if ARGV.empty?
   printf "Please specify a Chef Supermarket cookbook to see metrics. \n"
@@ -32,7 +35,7 @@ source_url = parsed["source_url"]
 desc = parsed["description"]
 sorted = version_array.sort_by { |a, _b| Gem::Version.new(a) }
 
-printf "\n=========  #{cookbook} cookbook metrics  =========\n"
+printf "\n==============  #{cookbook} cookbook metrics  ==============\n"
 printf "Description: #{desc}\n"
 printf "Source URL:  #{source_url}\n\n"
 
@@ -43,7 +46,7 @@ sorted.each do |version|
     highest_download = version
   end
 
-  printf "%-08s %-03s\n", version[0], version[1]
+  printf "%-08s %-10s\n", version[0], version[1]
 end
 
 print_metrics(total, highest_download[0], highest_download[1])
