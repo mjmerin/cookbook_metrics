@@ -9,8 +9,9 @@ highest_download = ['0.0.0', 0]
 
 total = parsed['metrics']['downloads']['total']
 version_array = parsed['metrics']['downloads']['versions']
+sorted = version_array.sort_by { |a, _b| Gem::Version.new(a) }
 
-version_array.each do |version|
+sorted.each do |version|
   if version[1] > highest_download[1]
     highest_download = version
   end
@@ -19,9 +20,10 @@ version_array.each do |version|
 end
 
 current_time = DateTime.now
-formatted_time = current_time.strftime "%m/%d/%Y %H:%M"
+formatted_time = current_time.strftime '%m/%d/%Y %H:%M'
 
 printf "\n"
 printf "#{formatted_time} Metrics: \n"
 printf "  macos-cookbook total downloads: #{total} \n"
-printf "  Most popular macos-cookbook is %s: %s \n", highest_download[0], highest_download[1]
+printf "  Most popular macos-cookbook is %s: %s \n",
+       highest_download[0], highest_download[1]
