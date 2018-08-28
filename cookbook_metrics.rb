@@ -18,8 +18,8 @@ end
 
 def generate_csv(data)
   CSV.open('cookbook_metrics.csv', 'a') do |csv|
-    data.each do |version|
-      csv << version
+    data.each do |version, downloads|
+      csv << [version, downloads]
     end
   end
 end
