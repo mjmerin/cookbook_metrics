@@ -18,7 +18,9 @@ end
 
 def generate_csv(data)
   CSV.open('cookbook_metrics.csv', 'a') do |csv|
-    data.each {|item| csv << item }
+    data.each do |version|
+      csv << version
+    end
   end
 end
 
@@ -63,4 +65,3 @@ end
 print_metrics(total, highest_download[0], highest_download[1])
 
 generate_csv(sorted)
-# log_to_csv
