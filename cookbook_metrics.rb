@@ -1,6 +1,7 @@
 require 'rest-client'
 require 'json'
 require 'date'
+require 'csv'
 
 def print_metrics(total, version, downloads)
   current_time = DateTime.now
@@ -15,8 +16,18 @@ def print_metrics(total, version, downloads)
   printf "===========================================================\n"
 end
 
+def generate_csv(data)
+  CSV.open('cookbook_metrics.csv', 'a') do |csv|
+    data.each {|item| csv << item }
+  end
+end
 
-
+def log_to_csv(data)
+  CSV.open('cookbook_metrics.csv', 'a') do  |csv|
+    csv << ["row", "of", "CSV", "data"]
+    csv << ["another", "row"]
+  end
+end
 
 if ARGV.empty?
   printf "Please specify a Chef Supermarket cookbook to see metrics. \n"
@@ -51,4 +62,5 @@ end
 
 print_metrics(total, highest_download[0], highest_download[1])
 
-
+generate_csv(sorted)
+# log_to_csv
