@@ -25,6 +25,11 @@ def generate_csv(data)
 end
 
 def log_to_csv(data)
+  if !File.exist?('cookbook_metrics.csv')
+    generate_csv(data)
+    exit
+  end
+
   CSV.open('cookbook_metrics.csv', 'a') do  |csv|
     csv << ["row", "of", "CSV", "data"]
     csv << ["another", "row"]
@@ -64,4 +69,6 @@ end
 
 print_metrics(total, highest_download[0], highest_download[1])
 
-generate_csv(sorted)
+if ARGV[1] == 'csv'
+  log_to_csv(sorted)
+end
