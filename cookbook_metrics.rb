@@ -31,8 +31,8 @@ def log_to_csv(data)
   end
 
   CSV.open('cookbook_metrics.csv', 'a') do |csv|
-    csv << %w(row of CSV data)
-    csv << %w(another row)
+    csv << %w[row of CSV data]
+    csv << %w[another row]
   end
 end
 
@@ -60,15 +60,11 @@ printf "Source URL:  #{source_url}\n\n"
 printf "Version Downloads\n"
 printf "------- ---------\n"
 sorted.each do |version|
-  if version[1] > highest_download[1]
-    highest_download = version
-  end
+  highest_download = version if version[1] > highest_download[1]
 
   printf "%-08s %-10s\n", version[0], version[1]
 end
 
 print_metrics(total, highest_download[0], highest_download[1])
 
-if ARGV[1] == 'csv'
-  log_to_csv(sorted)
-end
+log_to_csv(sorted) if ARGV[1] == 'csv'
