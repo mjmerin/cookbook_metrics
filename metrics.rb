@@ -9,8 +9,8 @@ class Metrics
     @csv_file = "#{@cookbook_name}_cookbook_metrics.csv"
   end
 
-  def header(name, desc, source_url)
-    printf "\n==============  #{name} cookbook metrics  ==============\n"
+  def header(desc, source_url)
+    printf "\n==============  #{@cookbook_name} cookbook metrics  ==============\n"
     printf "Description: #{desc}\n"
     printf "Source URL:  #{source_url}\n\n"
   end
