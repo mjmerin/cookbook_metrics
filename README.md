@@ -69,3 +69,8 @@ Gems
 - date
 - csv
 
+#### Classes
+
+`Cookbook` - Contains easily accessible parsed results from the Chef Supermarket
+`Metrics` - Contains printing methods
+
