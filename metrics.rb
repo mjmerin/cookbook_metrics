@@ -25,6 +25,14 @@ class Metrics
     printf "===========================================================\n"
   end
 
+  def version_table(cookbook)
+    printf "Version Downloads\n"
+    printf "------- ---------\n"
+    cookbook.ver_array.each do |version|
+      printf "%-08s %-10s\n", version[0], version[1]
+    end
+  end
+
   def generate_csv(data)
     CSV.open(@csv_file, 'a') do |csv|
       data.each do |version, downloads|
