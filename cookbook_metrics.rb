@@ -1,5 +1,5 @@
-require 'rest-client'
-require 'json'
+require_relative 'cookbook'
+
 require 'date'
 require 'csv'
 
@@ -41,27 +41,22 @@ if ARGV.empty?
   exit
 end
 
-cookbook = ARGV[0]
-url = "https://supermarket.chef.io/api/v1/cookbooks/#{cookbook}"
-response = RestClient.get(url)
-parsed = JSON.parse(response)
+cookbook = Cookbook.new(ARGV[0])
 highest_download = ['0.0.0', 0]
 
-total = parsed['metrics']['downloads']['total']
-version_array = parsed['metrics']['downloads']['versions']
-source_url = parsed['source_url']
-desc = parsed['description']
-sorted = version_array.sort_by { |a, _b| Gem::Version.new(a) }
+total = cookbook.total_downloads
+source_url = cookbook.source_url
+desc = cookbook.desc
+ver_array = cookbook.ver_array
 
-printf "\n==============  #{cookbook} cookbook metrics  ==============\n"
+printf "\n==============  %s cookbook metrics  ==============\n", cookbook.name
 printf "Description: #{desc}\n"
 printf "Source URL:  #{source_url}\n\n"
 
 printf "Version Downloads\n"
 printf "------- ---------\n"
-sorted.each do |version|
+ver_array.each do |version|
   highest_download = version if version[1] > highest_download[1]
-
   printf "%-08s %-10s\n", version[0], version[1]
 end
 
