@@ -6,7 +6,7 @@ require 'csv'
 def print_metrics(total, version, downloads)
   current_time = DateTime.now
   formatted_time = current_time.strftime '%m/%d/%Y - %H:%M'
-  
+
   printf "\n"
   printf "Metrics: \n"
   printf "  Date/Time: #{formatted_time} \n"
@@ -25,19 +25,19 @@ def generate_csv(data)
 end
 
 def log_to_csv(data)
-  if !File.exist?('cookbook_metrics.csv')
+  unless File.exist?('cookbook_metrics.csv')
     generate_csv(data)
     exit
   end
 
-  CSV.open('cookbook_metrics.csv', 'a') do  |csv|
-    csv << ["row", "of", "CSV", "data"]
-    csv << ["another", "row"]
+  CSV.open('cookbook_metrics.csv', 'a') do |csv|
+    csv << %w(row of CSV data)
+    csv << %w(another row)
   end
 end
 
 if ARGV.empty?
-  printf "Please specify a Chef Supermarket cookbook to see metrics. \n"
+  printf 'Please specify a Chef Supermarket cookbook to see metrics. \n'
   exit
 end
 
@@ -49,8 +49,8 @@ highest_download = ['0.0.0', 0]
 
 total = parsed['metrics']['downloads']['total']
 version_array = parsed['metrics']['downloads']['versions']
-source_url = parsed["source_url"]
-desc = parsed["description"]
+source_url = parsed['source_url']
+desc = parsed['description']
 sorted = version_array.sort_by { |a, _b| Gem::Version.new(a) }
 
 printf "\n==============  #{cookbook} cookbook metrics  ==============\n"
