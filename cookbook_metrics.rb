@@ -4,7 +4,7 @@ require 'date'
 require 'csv'
 
 def print_metrics(total, version, downloads)
-  current_time = DateTime.now
+  current_time = Time.now
   formatted_time = current_time.strftime '%m/%d/%Y - %H:%M'
 
   printf "\n"
