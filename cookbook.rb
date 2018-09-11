@@ -5,7 +5,6 @@ require 'json'
 # Chef cookbook class
 class Cookbook
   attr_reader :name
-  attr_reader :ver_array
   attr_reader :metrics
 
   def initialize(cookbook_name)
