@@ -6,6 +6,8 @@ Simple [Chef Supermarket](https://supermarket.chef.io/) cookbook tracker script.
 Queries the [json file](https://supermarket.chef.io/api/v1/cookbooks/) provided by the [Chef Supermarket](https://supermarket.chef.io/) to provide supermarket downloads across all versions of the selected cookbook.  
 The selected cookbook must exist on the [Chef Supermarket](https://supermarket.chef.io/). 
 
+Uses [Supermarket API V1](https://docs.chef.io/supermarket_api.html)
+
 #### Usage
 
 Basic Usage
