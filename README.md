@@ -72,5 +72,7 @@ Gems
 #### Classes
 
 `Cookbook` - Contains easily accessible parsed results from the Chef Supermarket
-`Metrics` - Contains printing methods
+`Metrics` - Contains metrics pertaining to the selected cookbook
+`Version` - Contains cookbook version specific data
+`Display` - Contains printing methods
 
