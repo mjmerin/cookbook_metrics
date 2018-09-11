@@ -1,4 +1,5 @@
 require_relative 'Metrics'
+require_relative 'Version'
 require 'rest-client'
 require 'json'
 
@@ -6,12 +7,14 @@ require 'json'
 class Cookbook
   attr_reader :name
   attr_reader :metrics
+  attr_reader :versions
 
   def initialize(cookbook_name)
     @name = cookbook_name
     @url = "https://supermarket.chef.io/api/v1/cookbooks/#{cookbook_name}"
     @data = parse_data
     @metrics = Metrics.new(@data)
+    @versions = versions_init
   end
 
   def description
@@ -55,5 +58,15 @@ class Cookbook
   def parse_data
     response = RestClient.get(@url)
     JSON.parse(response)
+  end
+
+  def versions_init
+    versions = @data['versions']
+    cookbook_versions = Array.new
+    versions.each do |ver|
+      version = Version.new(@data, ver)
+      cookbook_versions.push(version)
+    end
+    cookbook_versions
   end
 end
