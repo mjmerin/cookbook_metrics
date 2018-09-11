@@ -1,5 +1,5 @@
 require_relative 'cookbook'
-require_relative 'metrics'
+require_relative 'display'
 
 def validate_input
   if ARGV.empty?
@@ -14,14 +14,14 @@ def display_cookbook_metrics
   validate_input
 
   cookbook = Cookbook.new(ARGV[0])
-  metrics = Metrics.new(cookbook.name)
+  display = Display.new(cookbook.name)
 
-  metrics.header(cookbook.desc, cookbook.source_url)
-  metrics.version_table(cookbook)
+  display.header(cookbook.description, cookbook.source_url)
+  display.version_table(cookbook.c_metrics)
 
-  total = cookbook.total_downloads
-  metrics.print(total, cookbook.most_downloaded[0], cookbook.most_downloaded[1])
-  metrics.log_to_csv(sorted) if ARGV[1] == 'csv'
+  total = cookbook.c_metrics.total_downloads
+  display.print(total, cookbook.c_metrics.most_downloaded[0], cookbook.c_metrics.most_downloaded[1])
+  display.log_to_csv(sorted) if ARGV[1] == 'csv'
 end
 
 display_cookbook_metrics
