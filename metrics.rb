@@ -1,55 +1,27 @@
-require 'date'
-require 'csv'
-
-# Metrics class for printing out cookbook stats
+# cookbook metrics
 class Metrics
-  def initialize(cookbook_name)
-    @cookbook_name = cookbook_name
-    @current_time = Time.now.strftime '%m/%d/%Y - %H:%M'
-    @csv_file = "#{@cookbook_name}_cookbook_metrics.csv"
+  attr_reader :total_downloads
+  attr_accessor :most_downloaded
+  attr_reader :followers
+  attr_reader :collaborators
+  attr_reader :ver_array
+
+  def initialize(data)
+    @accessor = data['metrics']
+    @total_downloads = @accessor['downloads']['total']
+    @most_downloaded = calculate_most_downloaded
+    @followers = @accessor['followers']
+    @collaborators = @accessor['collaborators']
+    @raw_version_array = @accessor['downloads']['versions']
+    @ver_array = @raw_version_array.sort_by { |a, _b| Gem::Version.new(a) }
   end
 
-  def header(desc, source_url)
-    printf "\n==============  #{@cookbook_name} cookbook metrics  ==============\n"
-    printf "Description: #{desc}\n"
-    printf "Source URL:  #{source_url}\n\n"
-  end
+  def calculate_most_downloaded
+    highest_download = ['0.0.0', 0]
 
-  def print(total, version, downloads)
-    printf "\n"
-    printf "Metrics: \n"
-    printf "  Date/Time: %s \n", @current_time
-    printf "  Total Downloads: #{total} \n"
-    printf "  Most Downloaded Version: %s at %s downloads \n\n",
-           version, downloads
-    printf "===========================================================\n"
-  end
-
-  def version_table(cookbook)
-    printf "Version Downloads\n"
-    printf "------- ---------\n"
-    cookbook.ver_array.each do |version|
-      printf "%-08s %-10s\n", version[0], version[1]
+    @ver_array.to_a.each do |version|
+      highest_download = version if version[1] > highest_download[1]
     end
-  end
-
-  def generate_csv(data)
-    CSV.open(@csv_file, 'a') do |csv|
-      data.each do |version, downloads|
-        csv << [version, downloads]
-      end
-    end
-  end
-
-  def log_to_csv(data)
-    unless File.exist?(@csv_file)
-      generate_csv(data)
-      exit
-    end
-
-    CSV.open(@csv_file, 'a') do |csv|
-      csv << %w[row of CSV data]
-      csv << %w[another row]
-    end
+    highest_download
   end
 end
