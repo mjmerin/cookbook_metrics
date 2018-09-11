@@ -1,7 +1,6 @@
 # cookbook metrics
 class Metrics
   attr_reader :total_downloads
-  attr_accessor :most_downloaded
   attr_reader :followers
   attr_reader :collaborators
   attr_reader :ver_array
@@ -9,7 +8,6 @@ class Metrics
   def initialize(data)
     @accessor = data['metrics']
     @total_downloads = @accessor['downloads']['total']
-    @most_downloaded = calculate_most_downloaded
     @followers = @accessor['followers']
     @collaborators = @accessor['collaborators']
     @raw_version_array = @accessor['downloads']['versions']
