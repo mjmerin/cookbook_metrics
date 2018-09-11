@@ -14,11 +14,6 @@ class Cookbook
     @metrics = Metrics.new(@data)
   end
 
-  def parse_data
-    response = RestClient.get(@url)
-    JSON.parse(response)
-  end
-
   def description
     @data['description']
   end
@@ -53,5 +48,12 @@ class Cookbook
 
   def updated_at
     @data['updated_at']
+  end
+
+  private
+
+  def parse_data
+    response = RestClient.get(@url)
+    JSON.parse(response)
   end
 end
