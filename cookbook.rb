@@ -6,13 +6,13 @@ require 'json'
 class Cookbook
   attr_reader :name
   attr_reader :ver_array
-  attr_reader :c_metrics
+  attr_reader :metrics
 
   def initialize(cookbook_name)
     @name = cookbook_name
     @url = "https://supermarket.chef.io/api/v1/cookbooks/#{cookbook_name}"
     @data = parse_data
-    @c_metrics = Metrics.new(@data)
+    @metrics = Metrics.new(@data)
   end
 
   def parse_data

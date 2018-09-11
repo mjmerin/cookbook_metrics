@@ -17,10 +17,10 @@ def display_cookbook_metrics
   display = Display.new(cookbook.name)
 
   display.header(cookbook.description, cookbook.source_url)
-  display.version_table(cookbook.c_metrics)
+  display.version_table(cookbook.metrics)
 
-  total = cookbook.c_metrics.total_downloads
-  most_downloaded = cookbook.c_metrics.calculate_most_downloaded
+  total = cookbook.metrics.total_downloads
+  most_downloaded = cookbook.metrics.calculate_most_downloaded
   display.print(total, most_downloaded[0], most_downloaded[1])
   display.log_to_csv(sorted) if ARGV[1] == 'csv'
 end
