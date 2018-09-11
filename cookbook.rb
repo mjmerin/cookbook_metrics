@@ -1,5 +1,5 @@
-require_relative 'Metrics'
-require_relative 'Version'
+require_relative 'metrics'
+require_relative 'version'
 require 'rest-client'
 require 'json'
 
