@@ -1,5 +1,5 @@
-require_relative 'cookbook'
-require_relative 'display'
+require_relative 'cookbook_metrics/cookbook'
+require_relative 'cookbook_metrics/display'
 
 def validate_input
   if ARGV.empty?
