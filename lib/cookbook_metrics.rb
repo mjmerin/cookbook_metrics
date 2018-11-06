@@ -1,18 +1,9 @@
 require_relative 'cookbook_metrics/cookbook'
 require_relative 'cookbook_metrics/display'
 
-# module CookbookMetrics
+module CookbookMetrics
 
-#   VERSION = "0.1.0"
-
-  def validate_cli_input
-    if ARGV.empty?
-      printf "Please specify a Chef Supermarket cookbook to see metrics. \n"
-      printf "  Usage: ruby #{__FILE__} <cookbook name> \n"
-      printf "  Usage: ruby #{__FILE__} <cookbook name> csv \n"
-      exit(2)
-    end
-  end
+  VERSION = "0.1.0"
 
   def display_cookbook_metrics(cookbook_name, option)
     cookbook = Cookbook.new(cookbook_name)
@@ -26,7 +17,4 @@ require_relative 'cookbook_metrics/display'
     display.print(total, most_downloaded[0], most_downloaded[1])
     display.log_to_csv(sorted) if option == 'csv'
   end
-
-  validate_cli_input
-  display_cookbook_metrics(ARGV[0], ARGV[1])
-# end
+end
