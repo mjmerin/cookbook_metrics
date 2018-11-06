@@ -1,28 +1,32 @@
 require_relative 'cookbook_metrics/cookbook'
 require_relative 'cookbook_metrics/display'
 
-def validate_input
-  if ARGV.empty?
-    printf "Please specify a Chef Supermarket cookbook to see metrics. \n"
-    printf "  Usage: ruby #{__FILE__} <cookbook name> \n"
-    printf "  Usage: ruby #{__FILE__} <cookbook name> csv \n"
-    exit(2)
+# module CookbookMetrics
+
+#   VERSION = "0.1.0"
+
+  def validate_cli_input
+    if ARGV.empty?
+      printf "Please specify a Chef Supermarket cookbook to see metrics. \n"
+      printf "  Usage: ruby #{__FILE__} <cookbook name> \n"
+      printf "  Usage: ruby #{__FILE__} <cookbook name> csv \n"
+      exit(2)
+    end
   end
-end
 
-def display_cookbook_metrics
-  validate_input
+  def display_cookbook_metrics(cookbook_name, option)
+    cookbook = Cookbook.new(cookbook_name)
+    display = Display.new(cookbook.name)
 
-  cookbook = Cookbook.new(ARGV[0])
-  display = Display.new(cookbook.name)
+    display.header(cookbook.description, cookbook.source_url)
+    display.version_table(cookbook.metrics)
 
-  display.header(cookbook.description, cookbook.source_url)
-  display.version_table(cookbook.metrics)
+    total = cookbook.metrics.total_downloads
+    most_downloaded = cookbook.metrics.calculate_most_downloaded
+    display.print(total, most_downloaded[0], most_downloaded[1])
+    display.log_to_csv(sorted) if option == 'csv'
+  end
 
-  total = cookbook.metrics.total_downloads
-  most_downloaded = cookbook.metrics.calculate_most_downloaded
-  display.print(total, most_downloaded[0], most_downloaded[1])
-  display.log_to_csv(sorted) if ARGV[1] == 'csv'
-end
-
-display_cookbook_metrics
+  validate_cli_input
+  display_cookbook_metrics(ARGV[0], ARGV[1])
+# end
