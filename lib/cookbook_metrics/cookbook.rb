@@ -62,7 +62,7 @@ class Cookbook
 
   def versions_init
     versions = @data['versions']
-    cookbook_versions = Array.new
+    cookbook_versions = []
     versions.each do |ver|
       version = Version.new(@data, ver)
       cookbook_versions.push(version)

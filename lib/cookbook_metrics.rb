@@ -2,8 +2,7 @@ require_relative 'cookbook_metrics/cookbook'
 require_relative 'cookbook_metrics/display'
 
 module CookbookMetrics
-
-  VERSION = "0.1.0"
+  VERSION = '0.1.0'.freeze
 
   def display_cookbook_metrics(cookbook_name, option)
     cookbook = Cookbook.new(cookbook_name)
