@@ -1,5 +1,5 @@
-require_relative 'cookbook_metrics/cookbook'
-require_relative 'cookbook_metrics/display'
+require 'cookbook_metrics/cookbook'
+require 'cookbook_metrics/display'
 
 module CookbookMetrics
   VERSION = '0.1.0'.freeze
