@@ -1,5 +1,4 @@
-require_relative '../lib/cookbook_metrics'
-include CookbookMetrics
+require 'cookbook_metrics'
 
 def validate_cli_input
   if ARGV.empty?
@@ -11,4 +10,4 @@ def validate_cli_input
 end
 
 validate_cli_input
-display_cookbook_metrics(ARGV[0], ARGV[1])
+CookbookMetrics.display_cookbook_metrics(ARGV[0], ARGV[1])
