@@ -45,5 +45,4 @@ class Version
     response = RestClient.get(@version_url)
     JSON.parse(response)
   end
-
 end
