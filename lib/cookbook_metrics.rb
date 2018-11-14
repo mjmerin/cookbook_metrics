@@ -4,7 +4,7 @@ require 'cookbook_metrics/display'
 module CookbookMetrics
   VERSION = '0.1.0'.freeze
 
-  def display_cookbook_metrics(cookbook_name, option)
+  def self.display_cookbook_metrics(cookbook_name, option)
     cookbook = Cookbook.new(cookbook_name)
     display = Display.new(cookbook.name)
 
